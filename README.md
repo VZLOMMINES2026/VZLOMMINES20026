@@ -8,8 +8,8 @@
   --bg:#0b0f12;
   --accent:#ffd95a;
   --speed:0.7s;
-  --gap:8px;          /* Камтар барои мобайл */
-  --cell-size:56px;    /* Камтар барои телефон */
+  --gap:6px;
+  --cell-size:56px;
 }
 *{box-sizing:border-box}
 html,body{height:100%; margin:0; font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
@@ -20,7 +20,7 @@ body{
   flex-direction:column;
   align-items:center;
   justify-content:flex-start;
-  padding:16px;
+  padding:12px;
   overflow-x:hidden;
 }
 
@@ -46,7 +46,7 @@ body{
 /* Grid ва cell-и ⭐ */
 .wrap{
   display:flex;
-  gap:16px;
+  gap:12px;
   flex-direction:column;
   align-items:center;
   width:100%;
@@ -83,20 +83,21 @@ body{
   transition: transform var(--speed) cubic-bezier(.2,.9,.3,1), box-shadow var(--speed) ease, opacity var(--speed) ease;
   box-shadow: 0 4px 12px rgba(2,6,12,0.6), inset 0 -4px 12px rgba(0,0,0,0.5);
   border:1px solid rgba(255,255,255,0.03);
-  aspect-ratio:1/1; /* square для мобильных */
+  aspect-ratio:1/1; /* square cells for all screens */
 }
 
 .cell .content{
   font-size:28px;
   z-index:2;
   opacity:0;
-  transition: opacity var(--speed) ease;
+  transition: opacity var(--speed) ease, transform var(--speed) ease;
   color: rgba(255,217,90,1);
   filter: brightness(1.3);
 }
 
 .cell.open .content{
   opacity:1;
+  transform: scale(1.2);
 }
 
 .cell:after{
@@ -109,6 +110,7 @@ body{
   z-index:1;
 }
 
+/* Controls */
 .controls{
   margin-top:12px;
   display:flex;
@@ -130,14 +132,7 @@ body{
   transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
 }
 .btn:active{transform:translateY(2px)}
-
-.btn[disabled]{
-  opacity:0.38;
-  cursor:not-allowed;
-  box-shadow:none;
-  border-color: rgba(255,255,255,0.03);
-  color:#7a858f;
-}
+.btn[disabled]{opacity:0.38; cursor:not-allowed; box-shadow:none; border-color: rgba(255,255,255,0.03); color:#7a858f;}
 
 @media (max-width:400px){
   #title{font-size:24px;}
@@ -168,6 +163,7 @@ const resetBtn = document.getElementById('resetBtn');
 const SPEED = 700;
 const TOTAL = 25;
 
+// Создаем ячейки
 for(let i=0;i<TOTAL;i++){
   const btn = document.createElement('button');
   btn.className = 'cell';
